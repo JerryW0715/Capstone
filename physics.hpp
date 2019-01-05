@@ -53,7 +53,7 @@ void add_constraint_forces (const Cloth &cloth,
                             SpMat<Mat3x3> &A, std::vector<Vec3> &b, double dt);
 
 void add_external_forces (const Cloth &cloth, const Vec3 &gravity,
-                          const Wind &wind, std::vector<Vec3> &fext,
+	const Wind &wind, vector<Pressure> &pressures, std::vector<Vec3> &fext,
                           std::vector<Mat3x3> &Jext);
 
 void add_morph_forces (const Cloth &cloth, const Morph &morph, double t,

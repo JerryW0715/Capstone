@@ -642,8 +642,18 @@ Vec3 wind_force (const Face *face, const Wind &wind) {
     return wind.density*face->a*abs(vn)*vn*face->n + wind.drag*face->a*vt;
 }
 
+/*This method calculates the forces on a Face returns a 3 dimensional vector
+Method not yet completed vface is temporal*/
+Vec3 pressure_force(const Face *face, vector<Pressure> &pressures) {
+	//Find which pressure applies to a given face
+	int vol=face->intVol;
+	double p = pressures[vol - 1].pressure;
+	Vec3 fp = p*face->a*face->n;  //pressure * area of face * normal vector of face 
+	return fp;
+}
+
 void add_external_forces (const Cloth &cloth, const Vec3 &gravity,
-                          const Wind &wind, vector<Vec3> &fext, 
+                          const Wind &wind, vector<Pressure> &pressures,vector<Vec3> &fext, 
                           vector<Mat3x3> &Jext) {
     const Mesh &mesh = cloth.mesh;
     for (int n = 0; n < mesh.nodes.size(); n++)
@@ -651,8 +661,9 @@ void add_external_forces (const Cloth &cloth, const Vec3 &gravity,
     for (int f = 0; f < mesh.faces.size(); f++) {
         const Face *face = mesh.faces[f];
         Vec3 fw = wind_force(face, wind);
+		Vec3 fp = pressure_force(face, pressures);
         for (int v = 0; v < 3; v++)
-            fext[face->v[v]->node->index] += fw/3.;
+			fext[face->v[v]->node->index] = fext[face->v[v]->node->index]+fw / 3.+fp/3.;
     }
 }
 

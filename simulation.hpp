@@ -43,6 +43,11 @@ struct Wind {
     double drag;
 };
 
+struct Pressure {
+	double pressure;
+	int presVol; // to which volume does the pressure belong
+};
+
 struct Simulation {
     // variables
     double time;
@@ -57,6 +62,7 @@ struct Simulation {
     std::vector<Obstacle> obstacles;
     std::vector<Morph> morphs;
     Vec3 gravity;
+	vector<Pressure> pressures;
     Wind wind;
     double friction, obs_friction;
     enum {Proximity, Physics, StrainLimiting, Collision, Remeshing, Separation,

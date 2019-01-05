@@ -127,10 +127,11 @@ struct Face {
     Mat2x2 S_plastic; // plastic strain
     double damage; // accumulated norm of S_plastic/S_yield
 	Mat2x2 S; //= Mat2x2(0); //plastic deformation
+	int intVol; //Belongs to which volume
     // constructors
     Face () {}
     explicit Face (Vert *vert0, Vert *vert1, Vert *vert2, Mat2x2 Strain, int label=0): //!!
-        label(label), S_plastic(0), damage(0), a(0), m(0) {
+        label(label), S_plastic(0), damage(0), a(0), m(0),intVol(0){
         v[0] = vert0;
         v[1] = vert1;
         v[2] = vert2;

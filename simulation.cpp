@@ -173,7 +173,7 @@ void physics_step (Simulation &sim, const vector<Constraint*> &cons) {
         int nn = sim.cloths[c].mesh.nodes.size();
         vector<Vec3> fext(nn, Vec3(0)); //initiate fext to [0,0,0]
         vector<Mat3x3> Jext(nn, Mat3x3(0)); //initiat Jext to 3x3 matrix with all 0 values
-        add_external_forces(sim.cloths[c], sim.gravity, sim.wind, fext, Jext);
+        add_external_forces(sim.cloths[c], sim.gravity, sim.wind, sim.pressures, fext, Jext);
         for (int m = 0; m < sim.morphs.size(); m++)
             if (sim.morphs[m].mesh == &sim.cloths[c].mesh)
                 add_morph_forces(sim.cloths[c], sim.morphs[m], sim.time,
